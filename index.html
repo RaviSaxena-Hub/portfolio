@@ -3,1121 +3,537 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ravi Saxena | IT Operations & Cloud Infrastructure</title>
+<title>Circuit and Code — Websites, Built Right</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Fira+Code:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:        #f8f9fc;
-  --bg2:       #f0f4ff;
-  --bg3:       #e8eef8;
-  --white:     #ffffff;
-  --panel:     #ffffff;
+  :root{
+    --ink:#0B2B1D;
+    --panel:#123420;
+    --panel-2:#0E2F1E;
+    --copper:#C97A4A;
+    --copper-bright:#E08F5B;
+    --gold:#D4AF37;
+    --cream:#EFE9DC;
+    --muted:#9FB8A8;
+    --line: rgba(239,233,220,0.14);
+    --radius: 3px;
+  }
 
-  --blue:      #2563eb;
-  --blue2:     #3b82f6;
-  --blue-lt:   #dbeafe;
-  --blue-mid:  #bfdbfe;
-  --indigo:    #4f46e5;
-  --indigo-lt: #ede9fe;
-  --sky:       #0284c7;
+  *{ box-sizing: border-box; margin:0; padding:0; }
 
-  --teal:      #0d9488;
-  --teal-lt:   #ccfbf1;
-  --rose:      #e11d48;
-  --amber:     #d97706;
-  --amber-lt:  #fef3c7;
+  html{ scroll-behavior:smooth; }
 
-  --text:      #0f172a;
-  --text2:     #334155;
-  --text3:     #64748b;
-  --text4:     #94a3b8;
-  --border:    #e2e8f0;
-  --border2:   #cbd5e1;
-  --shadow:    rgba(15,23,42,0.08);
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
 
-  --cursive:   'Dancing Script', cursive;
-  --serif:     'Cormorant Garamond', serif;
-  --sans:      'Outfit', sans-serif;
-  --mono:      'Fira Code', monospace;
-  --numfont:   'Space Grotesk', sans-serif;
-}
+  h1,h2,h3,.mono,nav,.tag,.legend,.eyebrow,.btn,.card-role,.spec dt,.wm{
+    font-family:'IBM Plex Mono', monospace;
+  }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 16px;
-  line-height: 1.75;
-  overflow-x: hidden;
-}
+  a{ color:inherit; text-decoration:none; }
 
-/* ===== SUBTLE BACKGROUND PATTERN ===== */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    radial-gradient(circle at 80% 10%, rgba(37,99,235,0.05) 0%, transparent 50%),
-    radial-gradient(circle at 10% 80%, rgba(79,70,229,0.04) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(13,148,136,0.03) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
+  ::selection{ background:var(--copper); color:var(--ink); }
 
-/* ===== NAV ===== */
-nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 200;
-  height: 70px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 5%;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  box-shadow: 0 1px 20px rgba(15,23,42,0.06);
-}
+  :focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
 
-.nav-logo {
-  display: flex; align-items: baseline; gap: 6px;
-}
-.nav-logo-cursive {
-  font-family: var(--cursive);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--blue);
-  line-height: 1;
-}
-.nav-logo-sub {
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text3);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
 
-.nav-links { display: flex; gap: 1.75rem; list-style: none; }
-.nav-links a {
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text3);
-  text-decoration: none;
-  letter-spacing: 0.03em;
-  transition: color 0.2s;
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute; bottom: -4px; left: 0; right: 0;
-  height: 2px;
-  background: var(--blue);
-  transform: scaleX(0);
-  transition: transform 0.2s;
-}
-.nav-links a:hover { color: var(--blue); }
-.nav-links a:hover::after { transform: scaleX(1); }
+  /* ---------- background circuitry ---------- */
+  .board-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    opacity:0.5;
+  }
+  .board-bg svg{ width:100%; height:100%; }
+  .trace{
+    fill:none;
+    stroke: var(--copper);
+    stroke-width:1;
+    opacity:0.16;
+  }
+  .pad{ fill:var(--gold); opacity:0.12; }
 
-/* ===== HERO ===== */
-#hero {
-  position: relative; z-index: 1;
-  min-height: 100vh;
-  display: flex; align-items: center;
-  padding: 120px 5% 80px;
-  overflow: hidden;
-}
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(11,43,29,0.86);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:1120px; margin:0 auto;
+  }
+  .brand{
+    font-weight:600; font-size:15px; letter-spacing:0.04em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--copper-bright); box-shadow:0 0 8px var(--copper-bright); }
+  .navlinks{ display:flex; gap:28px; font-size:13px; letter-spacing:0.03em; color:var(--muted); }
+  .navlinks a:hover{ color:var(--cream); }
+  .navlinks a{ transition:color .2s ease; }
+  @media (max-width:720px){ .navlinks{ display:none; } }
 
-/* Large decorative circle */
-.hero-circle {
-  position: absolute;
-  right: -80px; top: -80px;
-  width: 700px; height: 700px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-circle2 {
-  position: absolute;
-  right: 120px; top: 80px;
-  width: 400px; height: 400px;
-  border-radius: 50%;
-  border: 1px solid rgba(37,99,235,0.1);
-  pointer-events: none;
-}
-.hero-circle3 {
-  position: absolute;
-  right: 220px; top: 180px;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  border: 1px dashed rgba(37,99,235,0.15);
-  pointer-events: none;
-}
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; z-index:1;
+    padding:120px 0 90px;
+  }
+  .eyebrow{
+    color:var(--copper-bright);
+    font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    display:flex; align-items:center; gap:10px; margin-bottom:28px;
+  }
+  .eyebrow::before{ content:''; width:24px; height:1px; background:var(--copper-bright); }
 
-.hero-content { max-width: 780px; position: relative; }
+  .wm{
+    font-weight:700;
+    font-size: clamp(48px, 9vw, 108px);
+    line-height:0.96;
+    letter-spacing:-0.01em;
+  }
+  .wm .and{
+    color:var(--copper);
+    font-size:0.42em;
+    display:block;
+    margin:6px 0;
+    font-weight:500;
+  }
+  .wm .code-word{ color:var(--gold); }
 
-/* Status pill */
-.status-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--sans); font-size: 12px; font-weight: 500;
-  color: var(--teal);
-  background: var(--teal-lt);
-  border: 1px solid rgba(13,148,136,0.25);
-  padding: 6px 16px;
-  border-radius: 100px;
-  margin-bottom: 2rem;
-  letter-spacing: 0.04em;
-}
-.pulse-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--teal);
-  animation: pulse 2s ease infinite;
-}
-@keyframes pulse {
-  0%,100%{opacity:1;transform:scale(1);}
-  50%{opacity:0.5;transform:scale(0.8);}
-}
+  .hero-sub{
+    max-width:520px;
+    margin-top:28px;
+    color:var(--muted);
+    font-size:17px;
+  }
+  .hero-sub strong{ color:var(--cream); font-weight:600; }
 
-/* Eyebrow */
-.hero-eyebrow {
-  font-family: var(--mono);
-  font-size: 12px; color: var(--blue);
-  letter-spacing: 0.15em; text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
+  .hero-actions{ display:flex; gap:16px; margin-top:40px; flex-wrap:wrap; }
+  .btn{
+    display:inline-block;
+    padding:13px 26px;
+    font-size:13px; letter-spacing:0.04em;
+    border-radius:var(--radius);
+    transition: all .2s ease;
+  }
+  .btn-primary{
+    background:var(--copper);
+    color:var(--ink);
+    font-weight:600;
+  }
+  .btn-primary:hover{ background:var(--copper-bright); transform:translateY(-1px); }
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--cream);
+  }
+  .btn-ghost:hover{ border-color:var(--copper); color:var(--copper-bright); }
 
-/* Big cursive name */
-.hero-name-cursive {
-  font-family: var(--cursive);
-  font-size: clamp(3.5rem, 9vw, 7.5rem);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 0.9;
-  margin-bottom: 0.4rem;
-  letter-spacing: -0.01em;
-}
-.hero-name-cursive .name-accent { color: var(--blue); }
+  /* signature: node + trace linking founders */
+  .link-trace{
+    margin-top:64px;
+    width:100%;
+    max-width:560px;
+  }
+  .link-trace svg{ width:100%; height:auto; overflow:visible; }
+  .link-trace path{
+    fill:none; stroke:var(--copper); stroke-width:1.5;
+    stroke-dasharray: 600;
+    stroke-dashoffset:600;
+    animation: draw 1.8s ease forwards 0.4s;
+  }
+  .link-trace circle{ fill:var(--panel); stroke:var(--gold); stroke-width:1.5; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @media (prefers-reduced-motion: reduce){
+    .link-trace path{ animation:none; stroke-dashoffset:0; }
+  }
 
-/* Subtitle in serif italic */
-.hero-title {
-  font-family: var(--serif);
-  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--text3);
-  letter-spacing: 0.04em;
-  margin-bottom: 2rem;
-}
+  /* ---------- section shell ---------- */
+  section{ position:relative; z-index:1; padding:88px 0; border-top:1px solid var(--line); }
+  .sec-head{ margin-bottom:52px; }
+  .sec-head .eyebrow{ margin-bottom:14px; }
+  .sec-head h2{
+    font-size: clamp(26px, 3.4vw, 36px);
+    font-weight:600;
+    max-width:640px;
+  }
+  .sec-head p{ color:var(--muted); max-width:560px; margin-top:14px; font-size:15px; }
 
-.hero-desc {
-  font-size: 16px; font-weight: 400;
-  color: var(--text2);
-  max-width: 560px;
-  line-height: 1.85;
-  margin-bottom: 2.5rem;
-  padding-left: 1.5rem;
-  border-left: 3px solid var(--blue);
-}
+  /* ---------- founders ---------- */
+  .founders{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:760px){ .founders{ grid-template-columns:1fr; } }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:34px;
+    position:relative;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:0; left:0; width:34px; height:34px;
+    border-top:2px solid var(--gold); border-left:2px solid var(--gold);
+    opacity:0.6;
+  }
+  .card-role{ font-size:11px; letter-spacing:0.12em; color:var(--copper-bright); text-transform:uppercase; }
+  .card h3{ font-size:26px; margin-top:12px; font-weight:600; }
+  .card .card-desc{ color:var(--muted); margin-top:14px; font-size:14.5px; }
+  .spec{ margin-top:24px; border-top:1px solid var(--line); padding-top:20px; }
+  .spec-row{ display:flex; justify-content:space-between; padding:7px 0; font-size:13px; border-bottom:1px dashed var(--line); }
+  .spec-row:last-child{ border-bottom:none; }
+  .spec-row dt{ color:var(--muted); font-weight:400; }
+  .spec-row dd{ color:var(--cream); text-align:right; }
 
-/* Tags */
-.hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
-.h-tag {
-  font-family: var(--mono); font-size: 10.5px;
-  letter-spacing: 0.08em;
-  color: var(--blue); background: var(--blue-lt);
-  border: 1px solid var(--blue-mid);
-  padding: 5px 13px; border-radius: 4px;
-}
+  /* ---------- co-founders ---------- */
+  .cofounder-links{ margin-top:24px; }
+  .btn.btn-disabled{ border:1px dashed var(--line); color:var(--muted); cursor:default; }
+  .btn.btn-disabled:hover{ border-color:var(--line); color:var(--muted); }
 
-/* Stats */
-.hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
-.s-stat {
-  display: flex; flex-direction: column;
-  position: relative;
-  padding-bottom: 0.5rem;
-}
-.s-stat::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0;
-  width: 28px; height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--indigo));
-  border-radius: 2px;
-}
-.s-num {
-  font-family: var(--numfont);
-  font-size: 3.2rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--indigo) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.s-lbl {
-  font-family: var(--sans); font-size: 11px; font-weight: 500;
-  color: var(--text4); letter-spacing: 0.1em; text-transform: uppercase;
-  margin-top: 7px;
-}
+  /* ---------- services ---------- */
+  .services{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:820px){ .services{ grid-template-columns:1fr; } }
+  .service{
+    background:var(--ink);
+    padding:32px 30px;
+  }
+  .tag{
+    display:inline-block;
+    font-size:10.5px; letter-spacing:0.1em;
+    color:var(--gold);
+    border:1px solid rgba(212,175,55,0.35);
+    padding:3px 8px;
+    border-radius:2px;
+    margin-bottom:16px;
+  }
+  .service h3{ font-size:18px; font-weight:600; margin-bottom:10px; }
+  .service p{ color:var(--muted); font-size:14px; }
 
-/* CTA */
-.cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn-fill {
-  font-family: var(--sans); font-size: 14px; font-weight: 600;
-  letter-spacing: 0.05em;
-  color: #fff; background: var(--blue);
-  border: none; border-radius: 8px;
-  padding: 14px 32px; text-decoration: none;
-  display: inline-block;
-  box-shadow: 0 4px 20px rgba(37,99,235,0.3);
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-}
-.btn-fill:hover { background: var(--indigo); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,99,235,0.35); }
+  /* ---------- work ---------- */
+  .legend-head{
+    display:grid; grid-template-columns:90px 1fr 200px;
+    padding:12px 0; border-bottom:1px solid var(--line);
+    font-size:11px; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;
+  }
+  @media (max-width:640px){ .legend-head{ grid-template-columns:60px 1fr; } .col-type{ display:none; } }
+  .work-row{
+    display:grid; grid-template-columns:90px 1fr 200px;
+    padding:24px 0; border-bottom:1px solid var(--line);
+    align-items:baseline;
+    transition:background .2s ease;
+  }
+  @media (max-width:640px){ .work-row{ grid-template-columns:60px 1fr; } }
+  .work-row:hover{ background:rgba(201,122,74,0.05); }
+  .work-id{ color:var(--copper-bright); font-size:13px; }
+  .work-name{ font-size:19px; font-weight:600; }
+  .work-desc{ color:var(--muted); font-size:14px; margin-top:6px; max-width:480px; }
+  .work-type{ color:var(--muted); font-size:13px; text-align:right; }
+  @media (max-width:640px){ .work-type{ display:none; } }
 
-.btn-line {
-  font-family: var(--sans); font-size: 14px; font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--blue); background: transparent;
-  border: 1.5px solid var(--blue-mid); border-radius: 8px;
-  padding: 14px 32px; text-decoration: none;
-  display: inline-block;
-  transition: all 0.2s;
-}
-.btn-line:hover { border-color: var(--blue); background: var(--blue-lt); }
+  /* ---------- process ---------- */
+  .process{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+  @media (max-width:820px){ .process{ grid-template-columns:1fr; gap:28px; } }
+  .step{ padding:0 24px 0 0; position:relative; }
+  .step:first-child{ padding-left:0; }
+  .step-num{ color:var(--gold); font-size:13px; }
+  .step h3{ font-size:17px; font-weight:600; margin:12px 0 8px; }
+  .step p{ color:var(--muted); font-size:13.5px; }
+  .step-line{
+    position:absolute; top:8px; left:-12px; width:24px; height:1px;
+    background:var(--copper); opacity:0.5;
+  }
+  .step:first-child .step-line{ display:none; }
+  @media (max-width:820px){ .step-line{ display:none; } }
 
-/* ===== DIVIDER ===== */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--border2) 20%, var(--border2) 80%, transparent 100%);
-  position: relative; z-index: 1;
-}
+  /* ---------- contact ---------- */
+  .contact-box{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:56px;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap;
+  }
+  .contact-box h2{ font-size:clamp(24px,3vw,32px); font-weight:600; max-width:440px; }
+  .contact-links{ display:flex; flex-direction:column; gap:10px; align-items:flex-start; }
+  .contact-links a{ font-size:14px; color:var(--copper-bright); border-bottom:1px solid rgba(201,122,74,0.3); padding-bottom:2px; }
+  .contact-links a:hover{ color:var(--gold); border-color:var(--gold); }
 
-/* ===== SECTIONS ===== */
-section { position: relative; z-index: 1; padding: 100px 5%; }
-section.alt { background: var(--white); }
-
-.sec-eyebrow {
-  font-family: var(--mono); font-size: 11px;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--blue); margin-bottom: 0.5rem;
-  display: flex; align-items: center; gap: 10px;
-}
-.sec-eyebrow::after {
-  content: ''; display: inline-block;
-  width: 50px; height: 1px;
-  background: var(--blue-mid);
-}
-
-h2.sec-title {
-  font-family: var(--cursive);
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
-}
-.sec-sub {
-  font-size: 15px; color: var(--text3);
-  max-width: 520px; margin-top: 0.5rem;
-}
-
-/* ===== EXPERIENCE TIMELINE ===== */
-.timeline { display: flex; flex-direction: column; gap: 0; }
-
-.t-wrap {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  position: relative;
-}
-.t-wrap + .t-wrap { border-top: 1px solid var(--border); }
-
-/* vertical line */
-.t-wrap::after {
-  content: '';
-  position: absolute;
-  left: 220px;
-  top: 0; bottom: 0;
-  width: 1px;
-  background: var(--border2);
-}
-
-.t-meta {
-  padding: 2.5rem 2rem 2.5rem 0;
-  text-align: right;
-}
-.t-period {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--blue); letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
-}
-.t-co {
-  font-family: var(--sans); font-size: 14px; font-weight: 600;
-  color: var(--text); line-height: 1.3; margin-bottom: 3px;
-}
-.t-loc { font-size: 12px; color: var(--text4); }
-
-/* dot on the line */
-.t-dot {
-  position: absolute;
-  left: calc(220px - 7px);
-  top: 2.75rem;
-  width: 14px; height: 14px;
-  border-radius: 50%;
-  background: var(--white);
-  border: 2.5px solid var(--blue);
-  z-index: 2;
-  transition: background 0.2s;
-}
-.t-wrap:hover .t-dot { background: var(--blue); }
-
-.t-body { padding: 2.5rem 0 2.5rem 2.5rem; }
-
-.t-role {
-  font-family: var(--serif);
-  font-size: 1.5rem; font-weight: 600; font-style: italic;
-  color: var(--text); margin-bottom: 1.25rem;
-  line-height: 1.2;
-}
-
-.t-ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
-.t-ul li {
-  font-size: 14px; color: var(--text2);
-  padding-left: 1.25rem; position: relative; line-height: 1.65;
-}
-.t-ul li::before {
-  content: '▸';
-  position: absolute; left: 0;
-  color: var(--blue); font-size: 11px; top: 4px;
-}
-
-.t-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.t-chip {
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.08em;
-  color: var(--text3);
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  padding: 3px 10px; border-radius: 4px;
-  transition: all 0.2s;
-}
-.t-chip:hover { color: var(--blue); background: var(--blue-lt); border-color: var(--blue-mid); }
-
-@media(max-width:700px) {
-  .t-wrap { grid-template-columns: 1fr; }
-  .t-wrap::after,.t-dot { display: none; }
-  .t-meta { text-align: left; padding: 1.5rem 0 0; }
-  .t-body { padding: 1rem 0 1.5rem; }
-}
-
-/* ===== SKILLS ===== */
-.sk-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 1.25rem;
-}
-.sk-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.75rem;
-  transition: all 0.25s;
-  position: relative; overflow: hidden;
-  box-shadow: 0 1px 4px var(--shadow);
-}
-.sk-card:hover {
-  border-color: var(--blue-mid);
-  box-shadow: 0 8px 30px rgba(37,99,235,0.1);
-  transform: translateY(-3px);
-}
-.sk-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--blue), var(--indigo));
-  border-radius: 12px 12px 0 0;
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.3s;
-}
-.sk-card:hover::before { transform: scaleX(1); }
-
-.sk-icon-wrap {
-  width: 44px; height: 44px;
-  background: var(--blue-lt);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1rem;
-  color: var(--blue); font-size: 20px;
-}
-.sk-icon-wrap svg { width: 22px; height: 22px; fill: var(--blue); }
-
-.sk-name {
-  font-family: var(--sans); font-size: 13px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text); margin-bottom: 0.75rem;
-}
-.sk-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.sk-pill {
-  font-size: 12.5px; font-weight: 400;
-  color: var(--text2);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  padding: 4px 12px; border-radius: 100px;
-  transition: all 0.2s;
-}
-.sk-pill:hover { color: var(--blue); background: var(--blue-lt); border-color: var(--blue-mid); }
-
-/* ===== PROJECTS ===== */
-.proj-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-  gap: 1.25rem;
-}
-.proj-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  display: flex; flex-direction: column;
-  transition: all 0.25s;
-  box-shadow: 0 1px 4px var(--shadow);
-}
-.proj-card:hover {
-  border-color: var(--blue-mid);
-  box-shadow: 0 8px 30px rgba(37,99,235,0.1);
-  transform: translateY(-3px);
-}
-.proj-num {
-  font-family: var(--mono); font-size: 10px;
-  color: var(--text4); letter-spacing: 0.15em;
-  margin-bottom: 0.5rem;
-}
-.proj-title {
-  font-family: var(--serif);
-  font-size: 1.2rem; font-weight: 600; font-style: italic;
-  color: var(--text); line-height: 1.3; margin-bottom: 0.75rem;
-}
-.proj-desc {
-  font-size: 13.5px; color: var(--text2);
-  line-height: 1.7; flex: 1;
-}
-.proj-badge {
-  margin-top: 1.25rem;
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--teal);
-  background: var(--teal-lt);
-  border: 1px solid rgba(13,148,136,0.25);
-  padding: 5px 12px; border-radius: 4px;
-  display: inline-block; align-self: flex-start;
-}
-
-/* ===== ACHIEVEMENTS ===== */
-.ach-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
-}
-.ach-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.75rem;
-  transition: all 0.25s;
-  box-shadow: 0 1px 4px var(--shadow);
-}
-.ach-card:hover {
-  box-shadow: 0 8px 28px rgba(37,99,235,0.1);
-  transform: translateY(-3px);
-}
-.ach-icon {
-  font-size: 26px; margin-bottom: 1rem; display: block;
-}
-.ach-num {
-  font-family: var(--numfont);
-  font-size: 3rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  margin-bottom: 0.6rem;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--indigo) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  display: inline-block;
-}
-.ach-num.green {
-  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.ach-num.amber {
-  background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.ach-divider {
-  width: 24px; height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--indigo));
-  border-radius: 2px;
-  margin-bottom: 0.75rem;
-}
-.ach-card.green-card .ach-divider {
-  background: linear-gradient(90deg, #0d9488, #059669);
-}
-.ach-card.amber-card .ach-divider {
-  background: linear-gradient(90deg, #d97706, #ea580c);
-}
-.ach-txt { font-size: 13px; color: var(--text2); line-height: 1.6; }
-
-/* ===== CREDENTIALS ===== */
-.cred-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-}
-.cred-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.75rem;
-  position: relative; overflow: hidden;
-  box-shadow: 0 1px 4px var(--shadow);
-  transition: all 0.25s;
-}
-.cred-card:hover {
-  border-color: var(--blue-mid);
-  box-shadow: 0 8px 28px rgba(37,99,235,0.1);
-  transform: translateY(-3px);
-}
-.cred-card.aws { border-color: rgba(217,119,6,0.3); background: var(--amber-lt); }
-.cred-card.aws:hover { border-color: var(--amber); }
-.cred-card.aws::after {
-  content: 'CERTIFIED';
-  position: absolute; right: -34px; top: 20px;
-  font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em;
-  color: var(--amber);
-  background: rgba(217,119,6,0.15);
-  padding: 4px 50px;
-  transform: rotate(45deg);
-}
-.cred-type {
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--text4); margin-bottom: 0.75rem;
-}
-.cred-name {
-  font-family: var(--serif);
-  font-size: 1.1rem; font-weight: 600; font-style: italic;
-  color: var(--text); margin-bottom: 0.4rem; line-height: 1.3;
-}
-.cred-sub { font-size: 13px; color: var(--text3); }
-
-/* ===== CONTACT ===== */
-#contact {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--indigo) 100%);
-  text-align: center;
-}
-.contact-wrap { max-width: 680px; margin: 0 auto; }
-.contact-eyebrow {
-  font-family: var(--mono); font-size: 11px;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 1rem;
-}
-.contact-heading {
-  font-family: var(--cursive);
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.0;
-  margin-bottom: 1.25rem;
-}
-.contact-sub {
-  font-size: 16px; color: rgba(255,255,255,0.75);
-  max-width: 440px; margin: 0 auto 2.5rem;
-  line-height: 1.8;
-}
-.contact-links {
-  display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem;
-  margin-bottom: 3rem;
-}
-.c-link {
-  font-family: var(--sans); font-size: 13px; font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--blue); background: #fff;
-  text-decoration: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: all 0.2s;
-}
-.c-link:hover { background: var(--blue-lt); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-.c-link svg { width: 15px; height: 15px; fill: currentColor; }
-.contact-location {
-  font-family: var(--mono); font-size: 11px;
-  letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.5);
-}
-
-/* ===== FOOTER ===== */
-footer {
-  background: var(--bg3);
-  border-top: 1px solid var(--border);
-  padding: 2rem 5%;
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 1rem;
-  position: relative; z-index: 1;
-}
-.ft { font-family: var(--sans); font-size: 12px; color: var(--text3); }
-.ft span { color: var(--blue); font-weight: 600; }
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(26px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.hero-content > * { animation: fadeUp 0.7s ease both; }
-.hero-content > *:nth-child(1){animation-delay:.1s}
-.hero-content > *:nth-child(2){animation-delay:.2s}
-.hero-content > *:nth-child(3){animation-delay:.3s}
-.hero-content > *:nth-child(4){animation-delay:.35s}
-.hero-content > *:nth-child(5){animation-delay:.45s}
-.hero-content > *:nth-child(6){animation-delay:.55s}
-.hero-content > *:nth-child(7){animation-delay:.65s}
-.hero-content > *:nth-child(8){animation-delay:.75s}
-
-/* scrollbar */
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--blue-mid);border-radius:3px}
-
-@media(max-width:640px){
-  .nav-links{display:none;}
-  .hero-stats{gap:1.5rem;}
-}
+  footer{
+    padding:32px 0 48px;
+    text-align:center;
+    color:var(--muted);
+    font-size:12.5px;
+    letter-spacing:0.03em;
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <span class="nav-logo-cursive">Ravi Saxena</span>
-    <span class="nav-logo-sub">Portfolio</span>
+<div class="board-bg" aria-hidden="true">
+  <svg viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice">
+    <path class="trace" d="M0,120 H300 V220 H620 V80 H900 V300"/>
+    <path class="trace" d="M1200,180 H960 V420 H700 V320"/>
+    <path class="trace" d="M0,520 H180 V680 H420 V560 H680"/>
+    <path class="trace" d="M1200,600 H880 V760 H1050 V900"/>
+    <path class="trace" d="M0,980 H260 V1120 H60 V1300"/>
+    <path class="trace" d="M1200,1040 H840 V1200 H1000 V1400"/>
+    <path class="trace" d="M300,1300 H600 V1450 H420 V1600"/>
+    <circle class="pad" cx="300" cy="120" r="5"/>
+    <circle class="pad" cx="620" cy="220" r="5"/>
+    <circle class="pad" cx="900" cy="80" r="5"/>
+    <circle class="pad" cx="960" cy="180" r="5"/>
+    <circle class="pad" cx="700" cy="420" r="5"/>
+    <circle class="pad" cx="180" cy="520" r="5"/>
+    <circle class="pad" cx="420" cy="680" r="5"/>
+    <circle class="pad" cx="880" cy="600" r="5"/>
+    <circle class="pad" cx="1050" cy="760" r="5"/>
+    <circle class="pad" cx="260" cy="980" r="5"/>
+    <circle class="pad" cx="60" cy="1120" r="5"/>
+    <circle class="pad" cx="840" cy="1040" r="5"/>
+    <circle class="pad" cx="1000" cy="1200" r="5"/>
+    <circle class="pad" cx="600" cy="1300" r="5"/>
+    <circle class="pad" cx="420" cy="1450" r="5"/>
+  </svg>
+</div>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span>CIRCUIT &amp; CODE</div>
+    <nav class="navlinks">
+      <a href="#founders">Founders</a>
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
-  <ul class="nav-links">
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#achievements">Impact</a></li>
-    <li><a href="#credentials">Credentials</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+</header>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-circle"></div>
-  <div class="hero-circle2"></div>
-  <div class="hero-circle3"></div>
-
-  <div class="hero-content">
-    <div class="status-pill">
-      <span class="pulse-dot"></span>
-      Available for New Opportunities
+<main>
+  <section class="hero wrap" style="border-top:none;">
+    <div class="eyebrow">Web development studio</div>
+    <h1 class="wm">CIRCUIT<span class="and">AND</span><span class="code-word">CODE</span></h1>
+    <p class="hero-sub">A two-person studio built on one idea: a website is only as good as what holds it up. <strong>Ravi</strong> builds the cloud infrastructure and deployment underneath it. <strong>Sneha</strong> builds the full-stack experience on top of it. Together, one team ships the whole thing.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Start a project</a>
+      <a href="#work" class="btn btn-ghost">See our work</a>
     </div>
 
-    <div class="hero-eyebrow">IT Operations & Cloud Infrastructure</div>
-
-    <h1 class="hero-name-cursive">
-      Ravi <span class="name-accent">Saxena</span>
-    </h1>
-
-    <p class="hero-title">Cloud Infrastructure Specialist &amp; DevOps Enthusiast</p>
-
-    <p class="hero-desc">
-      7+ years engineering enterprise-grade IT environments — scaling operations across 1,000+ servers at UKG, designing secure network architectures, and deploying finance server infrastructure at ESG Book. AWS Certified. Linux-native. Always learning.
-    </p>
-
-    <div class="hero-tags">
-      <span class="h-tag">AWS Cloud</span>
-      <span class="h-tag">Linux</span>
-      <span class="h-tag">Windows Server</span>
-      <span class="h-tag">Network Architecture</span>
-      <span class="h-tag">VLAN / Firewall</span>
-      <span class="h-tag">ServiceNow</span>
-      <span class="h-tag">Splunk</span>
-      <span class="h-tag">Jenkins</span>
-      <span class="h-tag">PowerShell</span>
+    <div class="link-trace" aria-hidden="true">
+      <svg viewBox="0 0 560 90">
+        <path d="M30,45 H180 C220,45 220,20 260,20 H300 C340,20 340,70 380,70 H530"/>
+        <circle cx="30" cy="45" r="9"/>
+        <circle cx="530" cy="70" r="9"/>
+      </svg>
     </div>
+  </section>
 
-    <div class="hero-stats">
-      <div class="s-stat"><span class="s-num">7+</span><span class="s-lbl">Years Exp.</span></div>
-      <div class="s-stat"><span class="s-num">1000+</span><span class="s-lbl">Servers Managed</span></div>
-      <div class="s-stat"><span class="s-num">150+</span><span class="s-lbl">Users Supported</span></div>
-      <div class="s-stat"><span class="s-num">30%</span><span class="s-lbl">Downtime Reduced</span></div>
+  <section id="founders" class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Who's building</div>
+      <h2>Two disciplines, one delivery.</h2>
+      <p>We don't split a project into "your part" and "my part." Every site we ship has been through both of us.</p>
     </div>
-
-    <div class="cta-row">
-      <a href="#contact" class="btn-fill">Get In Touch</a>
-      <a href="#experience" class="btn-line">View Experience</a>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- EXPERIENCE -->
-<section id="experience" class="alt">
-  <div style="margin-bottom:3rem;">
-    <div class="sec-eyebrow">01 // Work History</div>
-    <h2 class="sec-title">Experience</h2>
-    <p class="sec-sub">From Level-0 analyst to Cloud Infrastructure Specialist — a decade of growth across enterprise environments.</p>
-  </div>
-
-  <div class="timeline">
-
-    <div class="t-wrap">
-      <div class="t-dot"></div>
-      <div class="t-meta">
-        <div class="t-period">June 2025 – Present</div>
-        <div class="t-co">Cognista Service Pvt. Ltd.</div>
-        <div class="t-loc">Noida, India</div>
+    <div class="founders">
+      <div class="card">
+        <div class="card-role">Cloud &amp; Infrastructure</div>
+        <h3>Ravi Saxena</h3>
+        <p class="card-desc">Handles everything that keeps a site fast, secure, and online — hosting, deployment pipelines, domains, and cloud architecture. AWS Solutions Architect Associate certified, with 7+ years in IT infrastructure.</p>
+        <dl class="spec">
+          <div class="spec-row"><dt>Focus</dt><dd>Deployment &amp; DevOps</dd></div>
+          <div class="spec-row"><dt>Platform</dt><dd>AWS</dd></div>
+          <div class="spec-row"><dt>Owns</dt><dd>Hosting, uptime, CI/CD</dd></div>
+        </dl>
       </div>
-      <div class="t-body">
-        <div class="t-role">Cloud Infrastructure Specialist</div>
-        <ul class="t-ul">
-          <li>Leading cloud infrastructure operations and service delivery at Cognista.</li>
-        </ul>
-        <div class="t-chips">
-          <span class="t-chip">Cloud Infrastructure</span>
-          <span class="t-chip">IT Operations</span>
+      <div class="card">
+        <div class="card-role">Full-Stack Development</div>
+        <h3>Sneha Saxena</h3>
+        <p class="card-desc">Builds the site itself — front end, back end, and everything the visitor actually interacts with. Turns designs and requirements into a working, polished product.</p>
+        <dl class="spec">
+          <div class="spec-row"><dt>Focus</dt><dd>Front end &amp; back end</dd></div>
+          <div class="spec-row"><dt>Owns</dt><dd>UI, logic, integrations</dd></div>
+          <div class="spec-row"><dt>Delivers</dt><dd>The finished experience</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="cofounders" class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Co-founders</div>
+      <h2>The two people behind Circuit and Code.</h2>
+      <p>Ravi and Sneha founded the studio together. Here is who they are and where to see their individual work.</p>
+    </div>
+    <div class="founders">
+      <div class="card">
+        <div class="card-role">Co-Founder</div>
+        <h3>Ravi Saxena</h3>
+        <p class="card-desc">Co-founder of Circuit and Code, leading cloud infrastructure and deployment. Ravi is AWS Solutions Architect Associate certified and brings 7+ years of IT infrastructure experience to every project.</p>
+        <dl class="spec">
+          <div class="spec-row"><dt>Role</dt><dd>Co-Founder</dd></div>
+          <div class="spec-row"><dt>Focus</dt><dd>Cloud &amp; infrastructure</dd></div>
+          <div class="spec-row"><dt>Certification</dt><dd>AWS Solutions Architect Associate</dd></div>
+        </dl>
+        <div class="cofounder-links">
+          <a class="btn btn-ghost" href="https://ravisaxena-hub.github.io/portfolio/" target="_blank" rel="noopener noreferrer">View Ravi's portfolio</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-role">Co-Founder</div>
+        <h3>Sneha Saxena</h3>
+        <p class="card-desc">Co-founder of Circuit and Code, leading full-stack development. Sneha builds the front end and back end of every site and turns requirements into a polished, working product.</p>
+        <dl class="spec">
+          <div class="spec-row"><dt>Role</dt><dd>Co-Founder</dd></div>
+          <div class="spec-row"><dt>Focus</dt><dd>Full-stack development</dd></div>
+          <div class="spec-row"><dt>Owns</dt><dd>UI, logic, integrations</dd></div>
+        </dl>
+        <div class="cofounder-links">
+          <!-- Sneha portfolio: replace the span below with
+               <a class="btn btn-ghost" href="PASTE_LINK_HERE" target="_blank" rel="noopener noreferrer">View Sneha's portfolio</a> -->
+          <span class="btn btn-ghost btn-disabled" aria-disabled="true">Portfolio link coming soon</span>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="t-wrap">
-      <div class="t-dot"></div>
-      <div class="t-meta">
-        <div class="t-period">Sept 2023 – May 2025</div>
-        <div class="t-co">ESG Book Pvt Ltd</div>
-        <div class="t-loc">Noida, India</div>
+  <section id="services" class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">What we do</div>
+      <h2>Websites, designed, built, and kept running.</h2>
+    </div>
+    <div class="services">
+      <div class="service">
+        <span class="tag">WEB</span>
+        <h3>Website design &amp; development</h3>
+        <p>Business sites, portfolios, and landing pages — designed around what your visitors need to do, then built to work on every device.</p>
       </div>
-      <div class="t-body">
-        <div class="t-role">IT Operations Specialist</div>
-        <ul class="t-ul">
-          <li>Managed day-to-day IT operations including incident resolution, stakeholder coordination, and adherence to SOPs for business continuity.</li>
-          <li>Designed and executed end-to-end employee onboarding and offboarding, including ID creation, laptop configuration, and secure access provisioning.</li>
-          <li>Led vendor management lifecycle — requirements gathering, finance coordination, negotiation, and IT asset procurement.</li>
-          <li>Maintained IT asset inventory for 150+ users with 100% audit accuracy and lifecycle management.</li>
-          <li>Designed and implemented secure network architecture during office relocation: VLAN segmentation, firewall configuration, secure Wi-Fi.</li>
-          <li>Deployed and managed a dedicated Finance Server with RBAC, automated backup strategy, and ongoing monitoring.</li>
-          <li>Executed full office relocation for 150+ users with zero critical downtime and zero data loss.</li>
-        </ul>
-        <div class="t-chips">
-          <span class="t-chip">VLAN</span><span class="t-chip">Firewall</span>
-          <span class="t-chip">Active Directory</span><span class="t-chip">Office 365</span>
-          <span class="t-chip">Intune</span><span class="t-chip">LAMP</span>
-          <span class="t-chip">PostgreSQL</span><span class="t-chip">Vendor Management</span>
-        </div>
+      <div class="service">
+        <span class="tag">CLOUD</span>
+        <h3>Hosting &amp; infrastructure</h3>
+        <p>Your site set up on reliable cloud infrastructure from day one, so it stays fast and available as it grows.</p>
+      </div>
+      <div class="service">
+        <span class="tag">OPS</span>
+        <h3>Deployment &amp; maintenance</h3>
+        <p>Updates, fixes, and monitoring after launch, so the site keeps working without you having to think about it.</p>
       </div>
     </div>
+  </section>
 
-    <div class="t-wrap">
-      <div class="t-dot"></div>
-      <div class="t-meta">
-        <div class="t-period">Oct 2018 – Sept 2023</div>
-        <div class="t-co">Ultimate Kronos Group (UKG)</div>
-        <div class="t-loc">Noida, India</div>
-      </div>
-      <div class="t-body">
-        <div class="t-role">Cloud Infrastructure Engineer</div>
-        <ul class="t-ul">
-          <li>Monitored Linux and Windows Servers end-to-end ensuring high availability across 1,000+ production servers.</li>
-          <li>Handled P1–P4 priority incidents, driving rapid resolution to minimize downtime and restore services within SLA.</li>
-          <li>Collaborated with DevOps team on patching and deployment cycles using Jira and Jenkins.</li>
-          <li>Executed Windows Server 2012 R2 → 2016 mass upgrades daily for 6 months with zero major escalations.</li>
-          <li>Reduced system downtime by 30% through proactive monitoring using Splunk, SolarWinds, and App Manager.</li>
-          <li>Developed automation scripts for bulk server monitoring and patch deployment across 1,000+ servers.</li>
-          <li>Promoted from Level-0 Analyst to L1 Operations; authored SOPs for operational consistency.</li>
-        </ul>
-        <div class="t-chips">
-          <span class="t-chip">Linux</span><span class="t-chip">Windows Server</span>
-          <span class="t-chip">Splunk</span><span class="t-chip">SolarWinds</span>
-          <span class="t-chip">ServiceNow</span><span class="t-chip">Jenkins</span>
-          <span class="t-chip">Jira</span><span class="t-chip">PowerShell</span>
-          <span class="t-chip">Bash</span><span class="t-chip">Salesforce</span>
-        </div>
-      </div>
+  <section id="work" class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Selected work</div>
+      <h2>What we've built so far.</h2>
     </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div style="margin-bottom:3rem;">
-    <div class="sec-eyebrow">02 // Technical Arsenal</div>
-    <h2 class="sec-title">Skills</h2>
-    <p class="sec-sub">Full-stack IT operations capability — from bare metal and networking to cloud and automation.</p>
-  </div>
-
-  <div class="sk-grid">
-    <div class="sk-card">
-      <div class="sk-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm0 8a2 2 0 012-2h16a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z"/></svg>
-      </div>
-      <div class="sk-name">Operating Systems</div>
-      <div class="sk-pills">
-        <span class="sk-pill">Windows</span><span class="sk-pill">Windows Server</span>
-        <span class="sk-pill">Linux RHEL</span><span class="sk-pill">Ubuntu</span>
-      </div>
+    <div class="legend-head">
+      <div>Ref</div>
+      <div>Project</div>
+      <div class="col-type">Type</div>
     </div>
-    <div class="sk-card">
-      <div class="sk-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M6.5 20Q4.22 20 2.61 18.43 1 16.85 1 14.58q0-1.95 1.17-3.48 1.17-1.52 3.08-1.95.51-2.27 2.35-3.71Q9.44 4 11.5 4q2.52 0 4.26 1.74T17.5 10q1.73.19 2.86 1.36Q21.5 12.54 21.5 14.25q0 1.87-1.31 3.06Q18.87 18.5 17 18.5H13V13.42l1.59 1.58L16 13.63 12 9.62l-4 4.01 1.41 1.37L11 13.42v5.08z"/></svg>
+    <div class="work-row">
+      <div class="work-id">01</div>
+      <div>
+        <div class="work-name">Preeti — Portfolio</div>
+        <div class="work-desc">Personal portfolio site for a QA Engineer, built to showcase experience and testing expertise to recruiters.</div>
       </div>
-      <div class="sk-name">Cloud & DevOps</div>
-      <div class="sk-pills">
-        <span class="sk-pill">AWS (SAA)</span><span class="sk-pill">Jenkins</span>
-        <span class="sk-pill">CI/CD</span><span class="sk-pill">Jira</span>
-      </div>
+      <div class="work-type">Personal portfolio</div>
     </div>
-    <div class="sk-card">
-      <div class="sk-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-7v2h2v-2h-2zm0-8v6h2V7h-2z"/></svg>
+    <div class="work-row">
+      <div class="work-id">02</div>
+      <div>
+        <div class="work-name">Maninder — Portfolio</div>
+        <div class="work-desc">Personal portfolio site for a Senior Salesforce Developer, presenting projects and credentials.</div>
       </div>
-      <div class="sk-name">Monitoring & ITSM</div>
-      <div class="sk-pills">
-        <span class="sk-pill">Splunk</span><span class="sk-pill">SolarWinds</span>
-        <span class="sk-pill">App Manager</span><span class="sk-pill">ServiceNow</span>
-        <span class="sk-pill">Salesforce</span>
-      </div>
+      <div class="work-type">Personal portfolio</div>
     </div>
-    <div class="sk-card">
-      <div class="sk-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20C19 20 22 3 22 3c-1 2-8 2-8 2 6-2 7 4 7 4-5 0-7 4-7 4z"/></svg>
+    <div class="work-row">
+      <div class="work-id">03</div>
+      <div>
+        <div class="work-name">RR Dental Clinic</div>
+        <div class="work-desc">Website for a dental clinic covering services, doctor profiles, and patient enquiries.</div>
       </div>
-      <div class="sk-name">Networking & Security</div>
-      <div class="sk-pills">
-        <span class="sk-pill">TCP/IP</span><span class="sk-pill">DNS/DHCP</span>
-        <span class="sk-pill">VPN</span><span class="sk-pill">Firewalls</span>
-        <span class="sk-pill">VLAN</span><span class="sk-pill">IAM</span>
-        <span class="sk-pill">BitLocker</span><span class="sk-pill">Intune</span>
+      <div class="work-type">Healthcare</div>
+    </div>
+    <div class="work-row">
+      <div class="work-id">04</div>
+      <div>
+        <div class="work-name">Leena Dhamija — Salon</div>
+        <div class="work-desc">Website for a luxury salon, built to reflect the brand and make booking simple.</div>
+      </div>
+      <div class="work-type">Beauty &amp; wellness</div>
+    </div>
+    <div class="work-row">
+      <div class="work-id">05</div>
+      <div>
+        <div class="work-name">Noushad Ansari's Classes</div>
+        <div class="work-desc">Website for a coaching business, laying out courses and making it easy for students to get in touch.</div>
+      </div>
+      <div class="work-type">Education</div>
+    </div>
+  </section>
+
+  <section id="process" class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">How we work</div>
+      <h2>Four steps, start to launch.</h2>
+    </div>
+    <div class="process">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Discovery</h3>
+        <p>We learn what your site needs to do and who it needs to do it for.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">02</div>
+        <h3>Design</h3>
+        <p>Sneha designs the pages and flow around that goal.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">03</div>
+        <h3>Build</h3>
+        <p>The site gets built and Ravi sets up the infrastructure to run it on.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">04</div>
+        <h3>Launch</h3>
+        <p>We deploy, test on real devices, and hand it over — live and working.</p>
       </div>
     </div>
-    <div class="sk-card">
-      <div class="sk-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-      </div>
-      <div class="sk-name">Scripting & Automation</div>
-      <div class="sk-pills">
-        <span class="sk-pill">PowerShell</span><span class="sk-pill">Bash</span>
-        <span class="sk-pill">Bulk Automation</span><span class="sk-pill">SOPs</span>
-      </div>
-    </div>
-    <div class="sk-card">
-      <div class="sk-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
-      </div>
-      <div class="sk-name">Infrastructure & Servers</div>
-      <div class="sk-pills">
-        <span class="sk-pill">Active Directory</span><span class="sk-pill">LAMP Stack</span>
-        <span class="sk-pill">PostgreSQL</span><span class="sk-pill">Office 365</span>
-        <span class="sk-pill">Exchange</span><span class="sk-pill">Jump Server</span>
+  </section>
+
+  <section id="contact" class="wrap" style="border-bottom:1px solid var(--line);">
+    <div class="contact-box">
+      <h2>Have a website that needs building? Let's talk about it.</h2>
+      <div class="contact-links">
+        <a href="mailto:hello@circuitandcode.in">hello@circuitandcode.in</a>
+        <a href="#">LinkedIn — Circuit and Code</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
-<div class="divider"></div>
-
-<!-- PROJECTS -->
-<section id="projects" class="alt">
-  <div style="margin-bottom:3rem;">
-    <div class="sec-eyebrow">03 // Delivered Work</div>
-    <h2 class="sec-title">Key Projects</h2>
-    <p class="sec-sub">High-stakes infrastructure projects delivered with precision, security, and zero critical incidents.</p>
-  </div>
-
-  <div class="proj-grid">
-    <div class="proj-card">
-      <div class="proj-num">PROJECT 01</div>
-      <div class="proj-title">Office IT Relocation & Infrastructure Migration</div>
-      <p class="proj-desc">Led full IT relocation for 150+ users — asset migration, infrastructure re-deployment, and Day 1 readiness. Complete transition with zero critical downtime and zero data loss.</p>
-      <span class="proj-badge">✓ Zero Downtime</span>
-    </div>
-    <div class="proj-card">
-      <div class="proj-num">PROJECT 02</div>
-      <div class="proj-title">Secure Network Architecture Design & Deployment</div>
-      <p class="proj-desc">Designed and deployed complete network infrastructure for a new office — VLAN segmentation, firewall rules, secure Wi-Fi, ISP coordination, and endpoint protection. Zero post-migration incidents.</p>
-      <span class="proj-badge">✓ Zero Security Incidents</span>
-    </div>
-    <div class="proj-card">
-      <div class="proj-num">PROJECT 03</div>
-      <div class="proj-title">Dedicated Finance Server Deployment</div>
-      <p class="proj-desc">Built a secure Finance Server for 150+ users — role-based access control, automated backup strategy, VLAN isolation, 100% backup compliance, and continuous performance monitoring.</p>
-      <span class="proj-badge">✓ 100% Backup Compliance</span>
-    </div>
-    <div class="proj-card">
-      <div class="proj-num">PROJECT 04</div>
-      <div class="proj-title">Large-Scale Server Patch Automation</div>
-      <p class="proj-desc">Built PowerShell and Bash automation scripts for bulk server monitoring and patch deployment across 1,000+ servers at UKG. Integrated with Jenkins pipelines and ITSM change workflows.</p>
-      <span class="proj-badge">✓ 1000+ Servers Automated</span>
-    </div>
-    <div class="proj-card">
-      <div class="proj-num">PROJECT 05</div>
-      <div class="proj-title">Windows Server 2012 R2 → 2016 Mass Upgrade</div>
-      <p class="proj-desc">6-month daily upgrade campaign migrating Windows Server at scale, managed via Jump Server for secure RDP access. Zero major escalations throughout the entire 6-month program.</p>
-      <span class="proj-badge">✓ Zero Escalations</span>
-    </div>
-    <div class="proj-card">
-      <div class="proj-num">PROJECT 06</div>
-      <div class="proj-title">LAMP Web Server Configuration</div>
-      <p class="proj-desc">Designed a website and configured a complete LAMP stack web server on Linux during B.Tech industrial training — the foundational hands-on experience that launched a career in Linux infrastructure.</p>
-      <span class="proj-badge">✓ Foundational Build</span>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ACHIEVEMENTS -->
-<section id="achievements">
-  <div style="margin-bottom:3rem;">
-    <div class="sec-eyebrow">04 // Measured Impact</div>
-    <h2 class="sec-title">Achievements</h2>
-    <p class="sec-sub">Numbers that define the real story of operational excellence delivered.</p>
-  </div>
-
-  <div class="ach-grid">
-    <div class="ach-card">
-      <span class="ach-icon">⚡</span>
-      <div class="ach-num">30%</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">System downtime reduced via proactive monitoring at UKG</div>
-    </div>
-    <div class="ach-card amber-card">
-      <span class="ach-icon">📦</span>
-      <div class="ach-num amber">20%</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">Asset loss reduced through improved tracking and lifecycle management</div>
-    </div>
-    <div class="ach-card">
-      <span class="ach-icon">🚀</span>
-      <div class="ach-num">30%</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">Onboarding time reduced by streamlining asset allocation</div>
-    </div>
-    <div class="ach-card green-card">
-      <span class="ach-icon">✅</span>
-      <div class="ach-num green">100%</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">Asset tracking accuracy through audit and process optimization</div>
-    </div>
-    <div class="ach-card green-card">
-      <span class="ach-icon">🏢</span>
-      <div class="ach-num green">0</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">Critical downtime during office relocation of 150+ users</div>
-    </div>
-    <div class="ach-card green-card">
-      <span class="ach-icon">🔒</span>
-      <div class="ach-num green">100%</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">Backup compliance and audit readiness for finance server</div>
-    </div>
-    <div class="ach-card amber-card">
-      <span class="ach-icon">📈</span>
-      <div class="ach-num amber">L0→L1</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">Promoted from Level-0 Analyst to L1 Operations at UKG</div>
-    </div>
-    <div class="ach-card green-card">
-      <span class="ach-icon">🛡️</span>
-      <div class="ach-num green">Zero</div>
-      <div class="ach-divider"></div>
-      <div class="ach-txt">Post-migration security incidents after secure network deployment</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CREDENTIALS -->
-<section id="credentials" class="alt">
-  <div style="margin-bottom:3rem;">
-    <div class="sec-eyebrow">05 // Education & Certifications</div>
-    <h2 class="sec-title">Credentials</h2>
-  </div>
-
-  <div class="cred-grid">
-    <div class="cred-card aws">
-      <div class="cred-type">Certification</div>
-      <div class="cred-name">AWS Solutions Architect – Associate</div>
-      <div class="cred-sub">Amazon Web Services · Active</div>
-    </div>
-    <div class="cred-card">
-      <div class="cred-type">Bachelor's Degree</div>
-      <div class="cred-name">B.Tech — Computer Science Engineering</div>
-      <div class="cred-sub">MERI College, MDU University, Rohtak · 2018</div>
-    </div>
-    <div class="cred-card">
-      <div class="cred-type">Diploma</div>
-      <div class="cred-name">Diploma in Computer Engineering</div>
-      <div class="cred-sub">Aditya Institute of Technology, BTE Board · 2014</div>
-    </div>
-    <div class="cred-card">
-      <div class="cred-type">Secondary Education</div>
-      <div class="cred-name">10th Standard — CBSE Board</div>
-      <div class="cred-sub">Kendriya Vidyalaya No. 1, Delhi Cantt · 2010</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-wrap">
-    <div class="contact-eyebrow">06 // Let's Connect</div>
-    <h2 class="contact-heading">Let's Build<br>Something Great</h2>
-    <p class="contact-sub">Currently based in New Delhi, India. Open to IT Operations, Cloud Infrastructure, and DevOps roles. Let's connect!</p>
-    <div class="contact-links">
-      <a href="mailto:ravi.saxena5892@gmail.com" class="c-link">
-        <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        Email Me
-      </a>
-      <a href="tel:+918826145585" class="c-link">
-        <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
-        +91 88261 45585
-      </a>
-      <a href="https://www.linkedin.com/in/ravi-saxena-a72057109/" target="_blank" class="c-link">
-        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://github.com/ravisaxena-hub" target="_blank" class="c-link">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
-        GitHub
-      </a>
-      <a href="https://ravi-saxena-portfolio-hub.lovable.app/" target="_blank" class="c-link">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        Live Portfolio
-      </a>
-    </div>
-    <div class="contact-location">NEW DELHI, INDIA &nbsp;·&nbsp; UTC+5:30 &nbsp;·&nbsp; OPEN TO RELOCATION</div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <span class="ft">© 2025 <span>Ravi Saxena</span> — IT Operations & Cloud Infrastructure Specialist</span>
-  <span class="ft">New Delhi, <span>India</span></span>
+  Circuit and Code — Ravi Saxena &amp; Sneha Saxena · Built by us, for you.
 </footer>
 
 </body>
